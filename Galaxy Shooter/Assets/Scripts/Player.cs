@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = 0.0f;
+    [SerializeField]
+    private int _lives = 3;
 
     void Start()
     {
@@ -57,5 +59,15 @@ public class Player : MonoBehaviour
         Vector3 laserOffset = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
         _canFire = Time.time + _fireRate;
         Instantiate(_laser, laserOffset, Quaternion.identity);
+    }
+
+    public void Damage()
+    {
+        _lives--;
+
+        if (_lives < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
