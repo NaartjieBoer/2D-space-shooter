@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
     [SerializeField]
-    //player speed variable
     private float _speed = 3.5f;
+    [SerializeField]
+    private GameObject _laser;
+    [SerializeField]
+    private float _fireRate = 0.5f;
+    private float _canFire = 0.0f;
 
     void Start()
     {
@@ -18,6 +23,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            FireLaser();
+        }
     }
 
     public void PlayerMovement()
@@ -30,7 +40,7 @@ public class Player : MonoBehaviour
         transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * Time.deltaTime);
 
         //restraints
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -.38f, 0), 0);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
         if (transform.position.x >= 11.3f)
         {
@@ -40,5 +50,12 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(11.3f, transform.position.y, 0);
         }
+    }
+
+    public void FireLaser()
+    {
+        Vector3 laserOffset = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
+        _canFire = Time.time + _fireRate;
+        Instantiate(_laser, laserOffset, Quaternion.identity);
     }
 }
