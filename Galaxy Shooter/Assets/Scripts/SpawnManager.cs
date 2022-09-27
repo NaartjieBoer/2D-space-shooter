@@ -8,21 +8,19 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyPrefab;
     [SerializeField]
     private GameObject _enemyContainer;
+    [SerializeField]
+    private GameObject _trippleShotPowerupPrefab;
+
     private bool _isSpawning = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerupRoutine());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    IEnumerator SpawnRoutine()
+    IEnumerator SpawnEnemyRoutine()
     {
         while (_isSpawning == true)
         {
@@ -33,6 +31,20 @@ public class SpawnManager : MonoBehaviour
 
             yield return new WaitForSeconds(5.0f);
         }
+    }
+
+    IEnumerator SpawnPowerupRoutine()
+    {
+        while (_isSpawning == true)
+        {
+            float randomTime = Random.Range(3, 8);
+            float randomX = Random.Range(-9.0f, 9.0f);
+            Vector3 spawnPosition = new Vector3(randomX, 7.5f, 0);
+            Instantiate(_trippleShotPowerupPrefab, spawnPosition, Quaternion.identity);
+
+            yield return new WaitForSeconds(randomTime);
+        }
+        
     }
 
     public void StopSpawning()
