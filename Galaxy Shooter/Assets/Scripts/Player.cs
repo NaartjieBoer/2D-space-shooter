@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     private SpawnManager _spawnManager;
     private bool _isTrippleShot = false;
+    private bool _isShieldOn = false;
+
+    [SerializeField]
+    private GameObject _shieldObject;
 
     void Start()
     {
@@ -26,6 +30,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
 
         if (_spawnManager == null)
         {
@@ -83,6 +88,13 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (_isShieldOn == true)
+        {
+            _isShieldOn = false;
+            _shieldObject.SetActive(false);
+            return;
+        }
+
         _lives--;
 
         if (_lives < 1)
@@ -121,4 +133,11 @@ public class Player : MonoBehaviour
 
         _speed /= _speedMultiplier;            
     }
+
+    public void ActivateShield()
+    {
+        _isShieldOn = true;
+        _shieldObject.SetActive(true);
+    }
+
 }
