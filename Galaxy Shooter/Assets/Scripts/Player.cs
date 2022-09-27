@@ -31,7 +31,6 @@ public class Player : MonoBehaviour
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
 
-
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn manager is Null");
