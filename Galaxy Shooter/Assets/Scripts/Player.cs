@@ -109,6 +109,8 @@ public class Player : MonoBehaviour
 
         _lives--;
 
+        _uiManager.UpdateLives(_lives);
+
         if (_lives < 1)
         {
             _spawnManager.StopSpawning();
@@ -150,15 +152,6 @@ public class Player : MonoBehaviour
     {
         _isShieldOn = true;
         _shieldObject.SetActive(true);
-    }
-
-    //method to add 10 to score
-    //Communicate with UI to Update score
-
-    public void UpdateScore()
-    {
-        _score += 10;
-        _uiManager.UpdateScoreText(_score);
     }
 
     public void AddScore(int points)

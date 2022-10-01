@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
             case "Laser":
                 if (_player != null)
                 {
-                    _player.UpdateScore();
+                    _player.AddScore(10);
                 }
 
                 Destroy(other.gameObject);
