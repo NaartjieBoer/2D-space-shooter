@@ -13,8 +13,7 @@ public class SpawnManager : MonoBehaviour
 
     private bool _isSpawning = true;
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
@@ -22,6 +21,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
+
         while (_isSpawning == true)
         {
             float randomX = Random.Range(-9.0f, 9.0f);
@@ -35,6 +36,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
+
         while (_isSpawning == true)
         {
             float randomTime = Random.Range(3, 8);
