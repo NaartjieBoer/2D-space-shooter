@@ -571,7 +571,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -674,6 +674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotateSpeed: 19
   _laser: {fileID: 827387796978142494, guid: 3461712366f8e6946b7cf1c78b7e782a, type: 3}
+  _explosionSoundClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!50 &962172956
 Rigidbody2D:
   serializedVersion: 4
@@ -1624,6 +1625,10 @@ PrefabInstance:
     - target: {fileID: -7389985692936177601, guid: a6ff31fbed803244ea401dfa412c50a7, type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214186662168628567, guid: a6ff31fbed803244ea401dfa412c50a7, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7861779142375434732, guid: a6ff31fbed803244ea401dfa412c50a7, type: 3}
       propertyPath: m_Name

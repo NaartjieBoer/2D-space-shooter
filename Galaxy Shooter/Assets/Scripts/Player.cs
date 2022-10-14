@@ -33,8 +33,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private AudioClip _laserSoundClip;
-    [SerializeField]
-    private AudioClip _playerExplosion;
     private AudioSource _audioSource;
 
     void Start()
@@ -142,11 +140,8 @@ public class Player : MonoBehaviour
 
         if (_lives < 1)
         {
-            _audioSource.clip = _playerExplosion;
-            _audioSource.Play();
             _spawnManager.StopSpawning();
-            Destroy(this.gameObject);
-            
+            Destroy(this.gameObject, 2.5f);
         }
     }
 
