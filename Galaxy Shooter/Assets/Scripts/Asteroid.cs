@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private GameObject _laser;
     private SpawnManager _spawnManager;
-
+    
     private void Start()
     {
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
@@ -18,6 +18,8 @@ public class Asteroid : MonoBehaviour
         {
             Debug.LogError("Spawn manager is null");
         }
+
+
     }
 
     // Update is called once per frame

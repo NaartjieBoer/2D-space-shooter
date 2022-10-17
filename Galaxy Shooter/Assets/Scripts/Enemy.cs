@@ -8,10 +8,15 @@ public class Enemy : MonoBehaviour
     private float _speed = 4.0f;
     private Player _player;
     private Animator _animator;
+    [SerializeField]
+    private AudioClip _explosionSoundClip;
+    private AudioSource _audioSource;
 
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _audioSource = GetComponent<AudioSource>();
+
         if (_player == null)
         {
             Debug.LogError("Player is NULL");
@@ -21,6 +26,15 @@ public class Enemy : MonoBehaviour
         if (_animator == null)
         {
             Debug.LogError("Animator is Null");
+        }
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("Enemy audio source is null");
+        }
+        else
+        {
+            _audioSource.clip = _explosionSoundClip;
         }
     }
     void Update()
@@ -46,6 +60,7 @@ public class Enemy : MonoBehaviour
                     _player.Damage();
                 }
                 _speed = 0f;
+                _audioSource.Play();
                 Destroy(this.gameObject, 2.5f);
                 break;
             case "Laser":
@@ -55,6 +70,7 @@ public class Enemy : MonoBehaviour
                 }
                 _speed = 0f;
                 _animator.SetTrigger("OnEnemyDeath");
+                _audioSource.Play();
                 Destroy(other.gameObject);
                 Destroy(this.gameObject, 2.5f);
                 break;
