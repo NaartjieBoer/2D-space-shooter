@@ -35,6 +35,10 @@ public class Player : MonoBehaviour
     private AudioClip _laserSoundClip;
     private AudioSource _audioSource;
 
+    private Rigidbody _rb2D;
+    private Vector2 _movement;
+
+
     void Start()
     {
         // Start position
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _rb2D = GetComponent<Rigidbody>();
 
         if (_spawnManager == null)
         {
@@ -69,12 +74,23 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
+        _movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        //PlayerMovement();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
+    }
+
+    public void FixedUpdate()
+    {
+        PlayerMovmentNew(_movement);
+    }
+
+    public void PlayerMovmentNew(Vector2 direction)
+    {
+        _rb2D.MovePosition((Vector2)transform.position + (direction * _speed * Time.deltaTime));
     }
 
     public void PlayerMovement()
