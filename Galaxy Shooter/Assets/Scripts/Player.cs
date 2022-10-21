@@ -35,8 +35,11 @@ public class Player : MonoBehaviour
     private AudioClip _laserSoundClip;
     private AudioSource _audioSource;
 
-    private Rigidbody _rb2D;
+    private Rigidbody2D _rb2D;
     private Vector2 _movement;
+
+    private float _horizontalInput;
+    private float _verticalInput;
 
 
     void Start()
@@ -47,7 +50,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
-        _rb2D = GetComponent<Rigidbody>();
+        _rb2D = GetComponent<Rigidbody2D>();
 
         if (_spawnManager == null)
         {
@@ -68,14 +71,21 @@ public class Player : MonoBehaviour
             _audioSource.clip = _laserSoundClip;
         }
 
+        if (_rb2D == null)
+        {
+            Debug.LogError("Player rigid body is Null");
+        }
+
         _score = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        //PlayerMovement();
+        //input from user
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+        _movement = new Vector2(_horizontalInput,_verticalInput);
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
@@ -90,30 +100,7 @@ public class Player : MonoBehaviour
 
     public void PlayerMovmentNew(Vector2 direction)
     {
-        _rb2D.MovePosition((Vector2)transform.position + (direction * _speed * Time.deltaTime));
-    }
-
-    public void PlayerMovement()
-    {
-        //input from user
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
-        transform.Translate(direction * _speed * Time.deltaTime);
-        
-        //restraints
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
-
-        if (transform.position.x >= 11.3f)
-        {
-            transform.position = new Vector3(-11.3f, transform.position.y, 0);
-        }
-        else if (transform.position.x <= -11.3f)
-        {
-            transform.position = new Vector3(11.3f, transform.position.y, 0);
-        }
+        _rb2D.MovePosition((Vector2)transform.position + (direction * _speed * Time.fixedDeltaTime));
     }
 
     public void FireLaser()
@@ -205,3 +192,27 @@ public class Player : MonoBehaviour
 
 
 }
+
+// old code
+
+//yee olde player movement
+/*public void PlayerMovement()
+{
+
+
+    Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+
+    transform.Translate(direction * _speed * Time.deltaTime);
+
+    //restraints
+    transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+
+    if (transform.position.x >= 11.3f)
+    {
+        transform.position = new Vector3(-11.3f, transform.position.y, 0);
+    }
+    else if (transform.position.x <= -11.3f)
+    {
+        transform.position = new Vector3(11.3f, transform.position.y, 0);
+    }
+}*/
